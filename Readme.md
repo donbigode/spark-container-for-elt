@@ -1,4 +1,4 @@
-# Project Name
+# Project 
 
 This project sets up a Docker-based environment that includes Postgres, Spark cluster with 2 workers, and a Jupyter Notebook instance. It allows you to perform data processing and analysis using PySpark and interact with a Postgres database seamlessly.
 
@@ -67,7 +67,7 @@ Here is the expected directory structure of the project:
   |
   ├── docker-compose.yml
   └── Readme.md
-  
+
    ```
 
 ## Note
