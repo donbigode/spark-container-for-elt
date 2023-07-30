@@ -24,11 +24,11 @@ To get started with this project, follow the steps below:
 
 5. **Run the Environment:**
    Once you've made the necessary updates, run the following command to set up the environment:
+   
+   ```
    docker-compose up -d
-
    ```
    This will start the Postgres database, Spark cluster with 2 workers, and Jupyter Notebook instance.
-   ```
 
 6. **Access Services:**
    - Postgres: localhost:5432
@@ -49,24 +49,26 @@ To get started with this project, follow the steps below:
 ## Directory Structure
 
 Here is the expected directory structure of the project:
-
-project_folder/
-├── inbound/
-│   └── sample_data.csv
-│
-├── postgres/
-│   └── Dockerfile
-│
-├── spark/
-│   └── Dockerfile
-│
-├── spark_scripts/src
-│   └── file_operations.py
-│   └── main.py
-│   └── requirements.txt
-|
-├── docker-compose.yml
-└── Readme.md
+  ```
+     project_folder/
+  ├── inbound/
+  │   └── sample_data.csv
+  │
+  ├── postgres/
+  │   └── Dockerfile
+  │
+  ├── spark/
+  │   └── Dockerfile
+  │
+  ├── spark_scripts/src
+  │   └── file_operations.py
+  │   └── main.py
+  │   └── requirements.txt
+  |
+  ├── docker-compose.yml
+  └── Readme.md
+  
+   ```
 
 ## Note
 
