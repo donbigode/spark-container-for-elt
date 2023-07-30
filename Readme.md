@@ -1,6 +1,3 @@
-Certainly! Below is the content for the `Readme.md` file that you can update with the new version:
-
-```markdown
 # Project Name
 
 This project sets up a Docker-based environment that includes Postgres, Spark cluster with 2 workers, and a Jupyter Notebook instance. It allows you to perform data processing and analysis using PySpark and interact with a Postgres database seamlessly.
@@ -62,11 +59,11 @@ project_folder/
 ├── spark/
 │   └── Dockerfile
 │
-├── spark_scripts/
-│   ├── __init__.py
+├── spark_scripts/src
 │   └── file_operations.py
 │   └── main.py
-│
+│   └── requirements.txt
+|
 ├── docker-compose.yml
 └── Readme.md
 ```
