@@ -14,6 +14,34 @@ Before proceeding, make sure you have the following installed on your system:
   pip install pyspark
   ```
 
+## Project Structure
+
+The project directory should have the following structure:
+
+```
+your_project_folder/
+│
+├── drivers/
+│   └── postgresql-<version>.jar  <-- Place the PostgreSQL JDBC driver JAR file here
+│
+├── inbound/
+│   └── sample_data.csv
+│
+├── postgres/
+│   └── Dockerfile
+│
+├── spark/
+│   └── Dockerfile
+│
+├── spark_scripts/
+│   ├── __init__.py
+│   └── file_operations.py
+│
+├── docker-compose.yml
+├── main.py
+└── Readme.txt
+```
+
 ## Step 1: Clone the Repository
 
 Clone this repository to your local machine:
@@ -23,7 +51,11 @@ git clone https://github.com/donbigode/spark-container-for-elt.git
 cd spark-container-for-elt
 ```
 
-## Step 2: Create Dockerfiles
+## Step 2: Download the PostgreSQL JDBC Driver
+
+Download the PostgreSQL JDBC driver (JAR file) from the PostgreSQL official website or the Maven repository. Make sure to choose the appropriate version of the JDBC driver that matches your PostgreSQL server version. Place the downloaded JAR file in the `drivers` folder inside your project directory.
+
+## Step 3: Create Dockerfiles
 
 In the project directory, create two separate Dockerfiles, one for Spark and another for PostgreSQL.
 
@@ -53,7 +85,7 @@ FROM postgres:latest
 EXPOSE 5432
 ```
 
-## Step 3: Create Docker Compose File
+## Step 4: Create Docker Compose File
 
 Create a `docker-compose.yml` file in the project directory to manage the containers:
 
@@ -84,7 +116,7 @@ services:
 
 Replace `your_postgres_user`, `your_postgres_password`, and `your_postgres_database` with your desired PostgreSQL credentials.
 
-## Step 4: Build and Run the Containers
+## Step 5: Build and Run the Containers
 
 In the project directory, build and run the containers using Docker Compose:
 
@@ -95,50 +127,18 @@ docker-compose up -d
 
 The `docker-compose build` command will build the images for Spark and PostgreSQL based on the Dockerfiles you created earlier. The `docker-compose up -d` command will start the containers in detached mode (in the background).
 
-## Step 5: Access Spark and Insert Data into PostgreSQL
+## Step 6: Run the PySpark Script
 
-To access the Spark container and use PySpark to insert data into the PostgreSQL database, follow these steps:
-
-### Access the Spark container:
+In the root of your project directory, run the `main.py` script to read the generic file and create a table in PostgreSQL:
 
 ```bash
-docker-compose exec spark bash
+python main.py
 ```
 
-### Use PySpark to interact with PostgreSQL:
+The `main.py` script will use PySpark to read the generic file (supported extensions: `.csv` and `.txt`) from the `inbound` folder and create a new table with the same column names and data types in the specified PostgreSQL database.
 
-```python
-from pyspark.sql import SparkSession
-
-# Initialize Spark session
-spark = SparkSession.builder \
-    .appName("Spark PostgreSQL Example") \
-    .getOrCreate()
-
-# Sample DataFrame with data
-data = [(1, 10), (2, 20), (3, 30)]
-columns = ["id", "value"]
-df = spark.createDataFrame(data, columns)
-
-# PostgreSQL connection properties
-url = "jdbc:postgresql://postgres:5432/your_database"  # Use the hostname "postgres" as it is the service name in Docker Compose
-properties = {
-    "user": "your_postgres_user",
-    "password": "your_postgres_password",
-    "driver": "org.postgresql.Driver"
-}
-
-# Write DataFrame to PostgreSQL
-df.write.jdbc(url=url, table="your_table_name", mode="append", properties=properties)
-
-# Stop Spark session
-spark.stop()
-```
-
-Replace `"your_database"`, `"your_postgres_user"`, `"your_postgres_password"`, and `"your_table_name"` with the appropriate values for your PostgreSQL setup.
-
-## Step 6: Accessing PostgreSQL Data with DBeaver (Optional)
+## Step 7: Accessing PostgreSQL Data with DBeaver (Optional)
 
 To access and explore the data inserted into the PostgreSQL database, you can use DBeaver, a popular database management tool. Follow the instructions in the previous section "How to Access the Results of this DB using DBeaver" to configure DBeaver and connect to the PostgreSQL database.
 
-That's it! You have now successfully composed and run Docker containers for Spark and PostgreSQL, and you can use PySpark to interact with the Spark cluster and insert data into the PostgreSQL database.
+That's it! You have now successfully composed and run Docker containers for Spark and PostgreSQL, used PySpark to interact with the Spark cluster, and inserted data into the PostgreSQL database.
