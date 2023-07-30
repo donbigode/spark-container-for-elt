@@ -52,6 +52,7 @@ services:
     command: "start-notebook.sh --NotebookApp.token='your_jupyter_token'"
     volumes:
       - jupyter_data:/home/jovyan/work  # Mount a volume for Jupyter notebooks and files
+      - ./inbound:/home/jovyan/work/inbound  # Mount the inbound directory into the Jupyter container
     networks:
       - custom_network
 
