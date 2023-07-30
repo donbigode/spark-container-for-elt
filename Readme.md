@@ -35,7 +35,7 @@ To get started with this project, follow the steps below:
    - Postgres: localhost:5432
    - Spark Master UI: localhost:8080
    - Jupyter Notebook: localhost:8888
-     - Use the token provided during Jupyter startup to access the notebook.
+     - Use the token provided during Jupyter startup to access the notebook. (docker logs jupyter_notebook is the command in the bash to receive it)
 
 7. **Data and Code Deployment:**
    - Place any inbound data you wish to process in the `inbound/` directory.
