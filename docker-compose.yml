@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  spark:
+    build:
+      context: ./spark
+    ports:
+      - "4040:4040" # Spark UI
+      - "8080:8080" # Spark Master UI
+      - "7077:7077" # Spark Master Port
+    # Add any other configuration you need for Spark container
+
+  postgres:
+    build:
+      context: ./postgres
+    ports:
+      - "5432:5432" # PostgreSQL port
+    environment:
+      POSTGRES_USER: pg-admin
+      POSTGRES_PASSWORD: beterraba123
+      POSTGRES_DB: elt-pg
+    # Add any other configuration you need for PostgreSQL container
