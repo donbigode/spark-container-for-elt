@@ -7,26 +7,28 @@ This project sets up a Docker-based environment that includes Postgres, Spark cl
 To get started with this project, follow the steps below:
 
 1. **Clone the repository:**
-   ```
+   
    git clone https://github.com/donbigode/spark-container-for-elt
+
    cd spark-container-for-elt
-   ```
+   
 
 2. **Docker Compose:**
    Before running the environment, make sure you have Docker and Docker Compose installed on your system. If not, you can install Docker from the official website: https://www.docker.com/get-started
 
 3. **Update the Dockerfiles:**
-   If you are using the Spark Dockerfile provided in this repository, no changes are needed. However, if you prefer to use your own Spark Dockerfile, ensure it includes the necessary dependencies, such as the PostgreSQL JDBC driver.
+   If you are using the Spark Dockerfile provided in this repository, no changes are needed. However, if you prefer to use your own Spark Dockerfile, ensure it includes the necessary dependencies.
 
 4. **Update the Docker Compose:**
    The `docker-compose.yml` file should be updated with your desired configurations, such as database credentials, usernames, passwords, etc. You can also modify the ports, volume mappings, or any other settings to suit your needs.
 
 5. **Run the Environment:**
    Once you've made the necessary updates, run the following command to set up the environment:
-   ```
    docker-compose up -d
+
    ```
    This will start the Postgres database, Spark cluster with 2 workers, and Jupyter Notebook instance.
+   ```
 
 6. **Access Services:**
    - Postgres: localhost:5432
@@ -48,7 +50,6 @@ To get started with this project, follow the steps below:
 
 Here is the expected directory structure of the project:
 
-```
 project_folder/
 ├── inbound/
 │   └── sample_data.csv
@@ -66,7 +67,6 @@ project_folder/
 |
 ├── docker-compose.yml
 └── Readme.md
-```
 
 ## Note
 
