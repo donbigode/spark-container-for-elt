@@ -1,16 +1,13 @@
+# spark/Dockerfile
 
-# Use a base image with Java and Spark pre-installed
-FROM bitnami/spark:latest
+# Use an official PySpark image as base
+FROM jupyter/pyspark-notebook:latest
 
-# Define working directory
-WORKDIR /app
+# Install additional dependencies if needed
 
-# Copy the Spark script and drivers to the container
-COPY spark-scripts/ /app/spark-scripts
-COPY jars/ app/jars
+# Download the PostgreSQL JDBC driver using curl
+RUN curl https://jdbc.postgresql.org/download/postgresql-42.2.18.jar -o /opt/bitnami/spark/jars/postgresql-42.2.18.jar
 
-# Create directories for data and logs and set appropriate permissions
-RUN mkdir -p /opt/bitnami/spark/data && \
-    mkdir -p /opt/bitnami/spark/logs && \
-    chmod -R 777 /opt/bitnami/spark/data && \
-    chmod -R 777 /opt/bitnami/spark/logs
+# Expose Jupyter Notebook port
+EXPOSE 8888
+EXPOSE 7077

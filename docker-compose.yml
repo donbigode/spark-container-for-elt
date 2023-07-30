@@ -1,35 +1,64 @@
 version: '3'
-
 services:
-  spark:
-    build:
-      context: ./spark
-    ports:
-      - "4040:4040"
-      - "8080:8080"
-      - "7077:7077"
-    networks:   # Add the 'my_network' network to the Spark container
-      - my_network
-    # Other configurations for the Spark container
-
   postgres:
     build:
       context: ./postgres
-    ports:
-      - "5432:5432" # PostgreSQL port
+    container_name: postgres_db
     environment:
       POSTGRES_USER: pg-admin
       POSTGRES_PASSWORD: beterraba123
       POSTGRES_DB: elt-pg
-    networks:   # Add the 'my_network' network to the PostgreSQL container
-      - my_network
-    # Other configurations for the PostgreSQL container
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - custom_network
+
+  spark-master:
+    image: bitnami/spark:latest
+    container_name: spark_master
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+    environment:
+      - SPARK_MODE=master
+    networks:
+      - custom_network
+
+  spark-worker-1:
+    image: bitnami/spark:latest
+    container_name: spark_worker_1
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+    networks:
+      - custom_network
+
+  spark-worker-2:
+    image: bitnami/spark:latest
+    container_name: spark_worker_2
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+    networks:
+      - custom_network
+
+  jupyter:
+    image: jupyter/pyspark-notebook:latest
+    container_name: jupyter_notebook
+    ports:
+      - "8888:8888"
+    command: "start-notebook.sh --NotebookApp.token='your_jupyter_token'"
+    volumes:
+      - jupyter_data:/home/jovyan/work  # Mount a volume for Jupyter notebooks and files
+    networks:
+      - custom_network
 
 volumes:
-  spark_data:  # Define volume for Spark data persistence
-  spark_logs:  # Define volume for Spark logs
+  postgres_data:  # Volume for Postgres data
+  jupyter_data:   # Volume for Jupyter notebook files and data
 
 networks:
-  my_network:  # Create a custom network named 'my_network'
-    driver: bridge   # You can use 'bridge' or any other appropriate network driver
-
+  custom_network:
+    driver: bridge
