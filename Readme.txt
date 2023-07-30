@@ -19,8 +19,8 @@ Before proceeding, make sure you have the following installed on your system:
 Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/your_username/your_repository.git
-cd your_repository
+git clone https://github.com/donbigode/spark-container-for-elt.git
+cd spark-container-for-elt
 ```
 
 ## Step 2: Create Dockerfiles
