@@ -5,10 +5,12 @@ services:
     build:
       context: ./spark
     ports:
-      - "4040:4040" # Spark UI
-      - "8080:8080" # Spark Master UI
-      - "7077:7077" # Spark Master Port
-    # Add any other configuration you need for Spark container
+      - "4040:4040"
+      - "8080:8080"
+      - "7077:7077"
+    networks:   # Add the 'my_network' network to the Spark container
+      - my_network
+    # Other configurations for the Spark container
 
   postgres:
     build:
@@ -19,4 +21,15 @@ services:
       POSTGRES_USER: pg-admin
       POSTGRES_PASSWORD: beterraba123
       POSTGRES_DB: elt-pg
-    # Add any other configuration you need for PostgreSQL container
+    networks:   # Add the 'my_network' network to the PostgreSQL container
+      - my_network
+    # Other configurations for the PostgreSQL container
+
+volumes:
+  spark_data:  # Define volume for Spark data persistence
+  spark_logs:  # Define volume for Spark logs
+
+networks:
+  my_network:  # Create a custom network named 'my_network'
+    driver: bridge   # You can use 'bridge' or any other appropriate network driver
+

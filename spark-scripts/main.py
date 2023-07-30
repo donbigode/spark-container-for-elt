@@ -1,16 +1,16 @@
 from pyspark.sql import SparkSession
-from spark_scripts.file_operations import read_generic_file, create_table_in_postgres
+from file_operations import read_generic_file, create_table_in_postgres
 
 if __name__ == "__main__":
     # Initialize Spark session with the PostgreSQL JDBC driver
     spark = SparkSession.builder \
         .appName("Process Generic File and Create Table") \
-        .config("spark.jars", "drivers/postgresql-<version>.jar") \
+        .config("spark.jars", "jars/postgresql-42.5.2.jar") \
         .getOrCreate()
 
     # Configuration (modify these parameters as needed)
     file_path = "inbound/sample_data.csv"  # Change this to the actual file path in the inbound folder
-    table_name = "your_table_name"  # Change this to the desired table name
+    table_name = "sample_data"  # Change this to the desired table name
     connection_properties = {
         'url': "jdbc:postgresql://your_postgres_host:5432/elt-pg",
         'user': "pg-admin",
